@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -31,6 +33,15 @@ public class CustomerRestController {
     public List<Customer> list() {
         return repo.findAll();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCustomerById(@PathVariable("id") long id) {
+        Optional<Customer> customer = repo.findById(id);
+        if (!customer.isPresent())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
+        return new ResponseEntity<>(customer, HttpStatus.OK);      
+    }
+    
 
     @PostMapping()
     public ResponseEntity<?> post(@RequestBody Customer input) {
