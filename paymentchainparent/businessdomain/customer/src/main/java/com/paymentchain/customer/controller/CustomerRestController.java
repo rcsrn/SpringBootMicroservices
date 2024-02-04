@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
-
-
 @RestController
 @RequestMapping("/customer")
 public class CustomerRestController {
@@ -50,8 +48,15 @@ public class CustomerRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     
-    @PutMapping("path/{id}")
-    public ResponseEntity<?> putMethodName(@PathVariable("id") long id, @RequestBody Customer entity) {
-        return null;
+    @PutMapping("/{id}")
+    public ResponseEntity<?> putMethodName(@PathVariable("id") long id, @RequestBody Customer input) {
+        Optional<Customer> foundCustomer = repo.findById(id);
+        if (!foundCustomer.isPresent())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);  
+        Customer customer = foundCustomer.get();
+        customer.setName(input.getName());
+        repo.save(customer);
+
+        return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 }
