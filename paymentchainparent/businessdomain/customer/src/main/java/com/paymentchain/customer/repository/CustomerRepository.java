@@ -9,10 +9,10 @@ import com.paymentchain.customer.entities.Customer;
 
 import jakarta.transaction.Transactional;
 
-public interface CustomerRepository  extends JpaRepository<Customer, Long>{
+public interface CustomerRepository extends JpaRepository<Customer, Long>{
     
     @Transactional
     @Modifying
     @Query(value = "UPDATE Customer SET name = :name WHERE id = :id", nativeQuery = true)
-    Customer updateCustomerById(@Param("id") long id, @Param("name") String name);
+    void updateCustomerById(@Param("id") long id, @Param("name") String name);
 }

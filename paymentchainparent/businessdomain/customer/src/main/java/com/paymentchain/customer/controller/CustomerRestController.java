@@ -55,6 +55,12 @@ public class CustomerRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);  
         Customer customer = foundCustomer.get();
         customer.setName(input.getName());
+        customer.setAddress(input.getAddress());
+        customer.setCode(input.getCode());
+        customer.setIban(input.getIban());
+        customer.setPhone(input.getPhone());
+        customer.setSurname(input.getSurname());
+
         repo.save(customer);
 
         return new ResponseEntity<>(customer, HttpStatus.OK);
