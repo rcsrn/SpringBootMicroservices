@@ -18,9 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-
 
 @RestController
 @RequestMapping("/customer")
@@ -42,7 +39,6 @@ public class CustomerRestController {
         return new ResponseEntity<>(customer, HttpStatus.OK);      
     }
     
-
     @PostMapping()
     public ResponseEntity<?> post(@RequestBody Customer input) {
         Customer customer = repo.save(input);
