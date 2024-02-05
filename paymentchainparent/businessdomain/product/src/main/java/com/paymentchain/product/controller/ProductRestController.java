@@ -57,7 +57,14 @@ public class ProductRestController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateProduct(@PathVariable("id") long id, @RequestBody Product input) {
-        return null;
+        Optional<Product> foundProduct = repo.findById(id);
+        if (!foundProduct.isPresent())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Product product = foundProduct.get();
+        product.setCode(input.getCode());
+        product.setName(input.getName());
+        repo.save(product);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
     
 }
