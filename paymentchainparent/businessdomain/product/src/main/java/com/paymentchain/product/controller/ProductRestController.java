@@ -48,7 +48,11 @@ public class ProductRestController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable("id") long id) {
-        return null;
+        Optional<Product> product = repo.findById(id);
+        if (!product.isPresent())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        repo.delete(product.get());
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
