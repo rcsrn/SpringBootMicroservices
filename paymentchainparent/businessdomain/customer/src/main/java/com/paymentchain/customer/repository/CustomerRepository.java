@@ -15,4 +15,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>{
     @Modifying
     @Query(value = "UPDATE Customer SET name = :name WHERE id = :id", nativeQuery = true)
     void updateCustomerById(@Param("id") long id, @Param("name") String name);
+
+    //Falta agregar findByCode
 }
